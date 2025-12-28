@@ -51,6 +51,33 @@
         .animate-float {
             animation: subtle-float 4s ease-in-out infinite;
         }
+
+        /* Thermal Printer Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #thermal-receipt, #thermal-receipt * {
+                visibility: visible;
+            }
+            #thermal-receipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 80mm; /* Standard thermal width */
+                padding: 5mm;
+                color: black !important;
+                background: white !important;
+                font-family: 'Courier New', Courier, monospace;
+            }
+            @page {
+                margin: 0;
+                size: auto;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
     </style>
 <script type="importmap">
 {
@@ -61,7 +88,8 @@
     "recharts": "https://esm.sh/recharts@^3.6.0",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
     "jspdf": "https://esm.sh/jspdf@^2.5.1",
-    "jspdf-autotable": "https://esm.sh/jspdf-autotable@^3.8.2"
+    "jspdf-autotable": "https://esm.sh/jspdf-autotable@^3.8.2",
+    "xlsx": "https://esm.sh/xlsx@0.18.5"
   }
 }
 </script>

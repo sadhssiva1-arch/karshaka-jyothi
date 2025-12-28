@@ -95,10 +95,22 @@ const Intake: React.FC<IntakeProps> = ({ data, onAddToken, onUpdateData }) => {
   };
 
   const handleCreateItemTemplate = () => {
-    if (!newItemName) return;
+    const trimmedName = newItemName.trim();
+    if (!trimmedName) return;
+
+    // Duplicate Check Logic
+    const exists = data.itemTemplates.some(
+      item => item.name.toLowerCase() === trimmedName.toLowerCase()
+    );
+
+    if (exists) {
+      alert(`Duplicate Entry: The item "${trimmedName}" is already present in the catalog.`);
+      return;
+    }
+
     const newItem: ItemTemplate = {
       id: crypto.randomUUID(),
-      name: newItemName
+      name: trimmedName
     };
     onUpdateData({ ...data, itemTemplates: [...data.itemTemplates, newItem] });
     setNewItemName('');
@@ -294,7 +306,7 @@ const Intake: React.FC<IntakeProps> = ({ data, onAddToken, onUpdateData }) => {
         </div>
       )}
 
-      {/* Item Catalog Modal (Reused Modal Logic) */}
+      {/* Item Catalog Modal */}
       {showNewItemModal && (
         <div className="fixed inset-0 bg-slate-950/40 backdrop-blur-xl z-[120] flex items-center justify-center p-4">
           <div className="bg-white rounded-[3.5rem] shadow-2xl max-w-md w-full p-12 animate-in zoom-in-95 duration-300 border border-slate-200">
